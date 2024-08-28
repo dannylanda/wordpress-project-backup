@@ -13,7 +13,11 @@ DOMAIN="wp.tasteofpunjabmcr.uk"
 
 # Use Certbot to obtain and install the SSL certificate for the specified domain
 sudo certbot --nginx --non-interactive --agree-tos --email $EMAIL -d $DOMAIN 
-#if this doesn't work remove apache2 with purge, and change SSL to full on Cloudflare afterwards
+sudo systemctl stop apache2
+sudo apt purge apache2 -y
+sudo apt-get purge apache2* -y
+systemctl reload nginx.service 
+#if this doesn't work change SSL to full on Cloudflare afterwards
 
 # Nginx unit test that will reload Nginx to apply changes ONLY if the test is successful
 sudo nginx -t && sudo systemctl reload nginx
